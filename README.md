@@ -1,2 +1,2 @@
 # SRAEapi_risk_school_dropout
-Here are the scripts of the application to detect the risk of school dropout
+Aquí se encuentra la información de una aplicación para apoyar la detección del riesgo de deserción escolar
