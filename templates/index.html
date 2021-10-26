@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>SRAE_API_Detector</title>
+    </head>
+    
+    <body>
+        <div class="login">
+            <!--<h1>SRAE_Sensor de Riesgo de Abandono Escolar</h1>-->
+             <!-- Main Input For Receiving Query to our ML -->
+            <form action="{{ url_for('predict')}}"method="post">
+                <div align='center'>
+                    <h1>SRAE_Sensor de Riesgo de Abandono Escolar</h1>
+                    <!--<form class="p-3 text-center" action="/predict", method="post" enctype="multipart/form-data">-->
+                        <fieldset>
+                             <legend>Caracter&iacute;sticas Estudiantiles</legend>
+                             <p>
+                                 <input class="form control" type="date" name="fecha_nacimiento">
+                                 <label for="size_1">Fecha de Nacimiento</label>
+                                 <input class="form control" type="number"  min="0" max="6" name="hermanos_Colegio">
+                                 <label for="size_3">Hermanos en el Colegio</label>
+                                 <select>
+                                    type="number" name="gender">
+                                    <option value="1">Femenino</option> 
+                                    <option value="2">Masculino</option> 
+                                 </select>
+                            </p>
+                            <p>
+                                <input class="form control" type="number" min="0" max="100" name="puntaje_Sisbén">
+                                <label for="size_2">Puntaje Sisb&eacute;n</label>
+                                <input class="form control" type="number" min="0" max="10" step="any" name="distancia">
+                                <label for="size_3">Distancia</label>
+                            </p>
+                            <p>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="math">
+                                <label for="size_3">Matem&aacute;ticas</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="cn">
+                                <label for="size_3">Ciencias Naturales</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="ing">
+                                <label for="size_3">Ingl&eacute;s</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="esp">
+                                <label for="size_3">Espa&ntilde;ol</label>
+                            </p>
+                            <p>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="cp">
+                                <label for="size_3">C&aacute;tedra de Paz</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="soc">
+                                <label for="size_3">Sociales</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="rel">
+                                <label for="size_3">Religi&oacute;n</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="art">
+                                <label for="size_3">Artes</label>
+                            </p>
+                            <p>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="edf">
+                                <label for="size_3">Educaci&oacute;n F&iacute;sica</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="tech">
+                                <label for="size_3">Tecnolog&iacute;a</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="emp">
+                                <label for="size_3">Emprendimiento</label>
+                                <input class="form control" type="number" min="1" max="5" step="0.01" name="etc">
+                                <label for="size_3">&Eacute;tica y Valores</label>
+                            </p>
+                            <p>
+                                <button type="submit" class="btn btn-primary btn-block btn-large">Predecir Riesgo de Abandono</button>
+                            </p>
+                        </fieldset>
+                </form>
+                <br>
+                <br>
+                {{ prediction_text }}
+            <!--<input class="btn btn-primary mt-3" type="submit" value="Predecir Riesgo de Abandono">-->
+            <!--<p class="text-center">El riesgo de abandono es de {{ prediction }}</p>-->
+        </div>
+    </body>
+</html>
+
+
+
