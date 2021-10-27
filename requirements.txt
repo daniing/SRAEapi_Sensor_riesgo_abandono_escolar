@@ -1,18 +1,18 @@
 click==7.1.2
-cloudpickle @ file:///tmp/build/80754af9/cloudpickle_1594141588948/work
+cloudpickle
 Flask==1.1.2
 Flask-RESTful==0.3.7
-imbalanced-learn @ file:///home/conda/feedstock_root/build_artifacts/imbalanced-learn_1592145894352/work
-joblib @ file:///tmp/build/80754af9/joblib_1594236160679/work
+imbalanced-learn
+joblib
 json5==0.9.5
 mkl-fft==1.1.0
 mkl-random==1.1.1
 mkl-service==2.3.0
 numpy==1.20.2
-pandas @ file:///opt/concourse/worker/volumes/live/5ef6147e-ea92-446e-4065-0c8c7435293f/volume/pandas_1592841676717/work
+pandas
 pandas-flavor==0.2.0
 python-dateutil==2.8.1
-scikit-learn @ file:///opt/concourse/worker/volumes/live/47a3ec7c-70dc-43c0-7317-def24a8afaf5/volume/scikit-learn_1592503037057/work
-scipy @ file:///opt/concourse/worker/volumes/live/7f5e51f8-abf3-4409-4c56-a4fb14cc9869/volume/scipy_1593104185999/work
+scikit-learn
+scipy
 statsmodels==0.11.1
 Werkzeug==1.0.1
