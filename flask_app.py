@@ -3,7 +3,7 @@
 """
 Created on Tue Oct 26 22:22:33 2021
 
-@author: danielzapatamedina
+@author: dz
 """
 
 import csv
@@ -12,7 +12,6 @@ import pandas as pd
 import pickle
 import joblib
 import math
-import scipy.stats as stats
 import datetime as dt 
 from datetime import datetime, date, time, timedelta
 from flask import Flask, request, jsonify, render_template
