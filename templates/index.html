@@ -3,7 +3,6 @@
     <head>
         <title>SRAE_API_Detector</title>
     </head>
-    
     <body>
         <div class="login">
             <!--<h1>SRAE_Sensor de Riesgo de Abandono Escolar</h1>-->
@@ -15,50 +14,53 @@
                         <fieldset>
                              <legend>Caracter&iacute;sticas Estudiantiles</legend>
                              <p>
-                                 <input class="form control" type="date" name="fecha_nacimiento">
-                                 <label for="size_1">Fecha de Nacimiento</label>
-                                 <input class="form control" type="number"  min="0" max="6" name="hermanos_Colegio">
+                                 <input class="form control" type="date" name="edad" required>
+                                 <label for="size_2">Fecha de Nacimiento</label>
+                                 <input class="form control" type="number"  placeholder="4"  min="0" max="6" name="hermanos_Colegio" required>
                                  <label for="size_3">Hermanos en el Colegio</label>
-                                 <select>
-                                    type="number" name="gender">
-                                    <option value="1">Femenino</option> 
-                                    <option value="2">Masculino</option> 
-                                 </select>
+                                 <input class="form control" type="number" placeholder="1" pattern="^[1-2]([,][1-2])?$" min="1" max="2" name="gender" required>
+                                 <label for="size_2">Femenino:1, Masculino:2</label>
+                                <input class="form control" type="number"  placeholder="6"  min="6" max="11" name="curso" required>
+                                <label for="size_3">Grado actual</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" min="0" max="100" name="puntaje_Sisbén">
+                                <input class="form control" type="number" placeholder="70.2" min="0" max="100" step="any" name="puntaje_Sisbén"required>
                                 <label for="size_2">Puntaje Sisb&eacute;n</label>
-                                <input class="form control" type="number" min="0" max="10" step="any" name="distancia">
-                                <label for="size_3">Distancia</label>
+                                <input class="form control" type="number" placeholder="0.645" min="0" max="10" step="any" name="distancia"required>
+                                <label for="size_3">Distancia (kil&oacute;metros)</label>
+                                <input class="form control" type="number" placeholder="2018" pattern="^[2016-2020]([,][2016-2020])?$" min="2016" max="2020" name="año_in" required>
+                                <label for="size_2">A&ntilde;o de ingreso</label>
+                                <input class="form control" type="number"  placeholder="7" min="6" max="11" name="grado_in" required>
+                                <label for="size_3">Grado de ingreso</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="math">
+                                <input class="form control" type="number" placeholder="5.0" min="1" max="5" step="0.01" name="math"required>
                                 <label for="size_3">Matem&aacute;ticas</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="cn">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="cn"required>
                                 <label for="size_3">Ciencias Naturales</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="ing">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="ing"required>
                                 <label for="size_3">Ingl&eacute;s</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="esp">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="esp"required>
                                 <label for="size_3">Espa&ntilde;ol</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="cp">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="cp"required>
                                 <label for="size_3">C&aacute;tedra de Paz</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="soc">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="soc"required>
                                 <label for="size_3">Sociales</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="rel">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="rel"required>
                                 <label for="size_3">Religi&oacute;n</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="art">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="art"required>
                                 <label for="size_3">Artes</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="edf">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="edf"required>
                                 <label for="size_3">Educaci&oacute;n F&iacute;sica</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="tech">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="tech"required>
                                 <label for="size_3">Tecnolog&iacute;a</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="emp">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="emp"required>
                                 <label for="size_3">Emprendimiento</label>
-                                <input class="form control" type="number" min="1" max="5" step="0.01" name="etc">
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="etc"required>
                                 <label for="size_3">&Eacute;tica y Valores</label>
                             </p>
                             <p>
@@ -66,6 +68,7 @@
                             </p>
                         </fieldset>
                 </form>
+
                 <br>
                 <br>
                 {{ prediction_text }}
