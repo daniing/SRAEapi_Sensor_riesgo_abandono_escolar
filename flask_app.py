@@ -35,7 +35,7 @@ filename_MLP = 'model_MLP.pkl'
 #model_ma = joblib.load(filename_model_ma)
 #model_lf = joblib.load(filename_latefusion)
 
-model_d = joblib.load(ilename_MLP)
+model_MLP = joblib.load(filename_MLP)
 
 @flask_app.route("/")
 def Home():
