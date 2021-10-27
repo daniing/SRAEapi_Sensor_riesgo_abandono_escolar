@@ -5,9 +5,6 @@ Flask-RESTful==0.3.7
 imbalanced-learn
 joblib
 json5==0.9.5
-mkl-fft==1.1.0
-mkl-random==1.1.1
-mkl-service==2.3.0
 numpy==1.20.2
 pandas
 pandas-flavor==0.2.0
