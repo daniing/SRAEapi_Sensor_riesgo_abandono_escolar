@@ -22,22 +22,17 @@ from sklearn.preprocessing import StandardScaler
 flask_app = Flask(__name__)
 #model = pickle.load(open("model_api_prueba.pkl", "rb"))
 
-#filename_model_d = 'model_api_demog.pkl'
-#filename_model_md = 'model_api_md.pkl'
-#filename_model_a = 'model_api_a.pkl'
-#filename_model_ma = 'model_api_ma.pkl'
-#filename_latefusion = 'model_latefusion.pkl'
+filename_model_d = 'model_api_demog.pkl'
+filename_model_md = 'model_api_md.pkl'
+filename_model_a = 'model_api_a.pkl'
+filename_model_ma = 'model_api_ma.pkl'
+filename_latefusion = 'model_latefusion.pkl'
 
-#model_d = joblib.load(filename_model_d)
-#model_md = joblib.load(filename_model_md)
-#model_a = joblib.load(filename_model_a)
-#model_ma = joblib.load(filename_model_ma)
-#model_lf = joblib.load(filename_latefusion)
-model_d = pickle.load(open("model_api_demog.pkl", "rb"))
-model_md = pickle.load(open("model_api_md.pkl", "rb"))
-model_a = pickle.load(open("model_api_a.pkl", "rb"))
-model_ma = pickle.load(open("model_api_ma.pkl", "rb"))
-model_lf = pickle.load(open("model_api_latefusion.pkl", "rb"))
+model_d = joblib.load(filename_model_d)
+model_md = joblib.load(filename_model_md)
+model_a = joblib.load(filename_model_a)
+model_ma = joblib.load(filename_model_ma)
+model_lf = joblib.load(filename_latefusion)
 
 @flask_app.route("/")
 def Home():
@@ -45,46 +40,46 @@ def Home():
 
 @flask_app.route("/predict", methods = ["POST"])
 def predict():
-   features_ini = [str(x) for x in request.form.values()]
-   features_ini_ = np.array(features_ini)
-   features = np.array(features_ini_)
-   features_float = features[1::]
-   features_float_ = [float(x) for x in features_float]
-   feature_date = features[:1:]
-   #fech_n = request.form.get('fecha_nacimiento')
-   fech_n_ = " ".join(str(x) for x in feature_date)
+    features_ini = [str(x) for x in request.form.values()]
+    features_ini_ = np.array(features_ini)
+    features = np.array(features_ini_)
+    features_float = features[1::]
+    features_float_ = [float(x) for x in features_float]
+    feature_date = features[:1:]
+    #fech_n = request.form.get('fecha_nacimiento')
+    fech_n_ = " ".join(str(x) for x in feature_date)
     
-   fech1 = datetime.strptime(fech_n_, '%Y-%m-%d').date()
-   fech2 = date.today()# criterio de medición (año) 
-   edad_ = round((fech2-fech1)/dt.timedelta(365,5,49,12),3) #promedio de años comunes y bisiestos 
+    fech1 = datetime.strptime(fech_n_, '%Y-%m-%d').date()
+    fech2 = date.today()# criterio de medición (año) 
+    edad_ = round((fech2-fech1)/dt.timedelta(365,5,49,12),3) #promedio de años comunes y bisiestos 
     
-   feature_hc = features[1].astype(float)
-   feature_g = features[2].astype(float)
-   feature_grado_a = features[3].astype(float)
-   feature_score_sisben = features[4].astype(float)
-   feature_distance = features[5].astype(float)
-   feature_year_in = features[6].astype(float)
-   feature_grado_in = features[7].astype(float)
-   feature_math = features[8].astype(float)
-   feature_cn = features[9].astype(float)
-   feature_ing = features[10].astype(float)
-   feature_esp = features[11].astype(float)
-   feature_catp = features[12].astype(float)
-   feature_soc = features[13].astype(float)
-   feature_rel = features[14].astype(float)
-   feature_art = features[15].astype(float)
-   feature_edf = features[16].astype(float)
-   feature_tec = features[17].astype(float)
-   feature_emp = features[18].astype(float)
-   feature_etv = features[19].astype(float)
+    feature_hc = features[1].astype(float)
+    feature_g = features[2].astype(float)
+    feature_grado_a = features[3].astype(float)
+    feature_score_sisben = features[4].astype(float)
+    feature_distance = features[5].astype(float)
+    feature_year_in = features[6].astype(float)
+    feature_grado_in = features[7].astype(float)
+    feature_math = features[8].astype(float)
+    feature_cn = features[9].astype(float)
+    feature_ing = features[10].astype(float)
+    feature_esp = features[11].astype(float)
+    feature_catp = features[12].astype(float)
+    feature_soc = features[13].astype(float)
+    feature_rel = features[14].astype(float)
+    feature_art = features[15].astype(float)
+    feature_edf = features[16].astype(float)
+    feature_tec = features[17].astype(float)
+    feature_emp = features[18].astype(float)
+    feature_etv = features[19].astype(float)
     
-   hc_ = feature_hc
+    hc_ = feature_hc
     
-   m1_d = edad_ - feature_grado_a + 5
+    m1_d = edad_ - feature_grado_a + 5
     
-   m2_d = np.where((feature_grado_a==feature_grado_in),0,
-                   np.where((((2019-feature_year_in)+feature_year_in)-feature_grado_in)<0,
-                   0,((2019-feature_year_in)+feature_year_in)-feature_grado_in))
+    m2_d = np.where((feature_grado_a==feature_grado_in),0,
+                     np.where((((2019-feature_year_in)+feature_year_in)-feature_grado_in)<0,
+                     0,((2019-feature_year_in)+feature_year_in)-feature_grado_in))
     
     mCM = (feature_cn+feature_math)/2
     mSC = (feature_soc+feature_catp)/2
@@ -121,14 +116,13 @@ def predict():
     late_test_dam =  np.hstack((prediction_d,prediction_a,prediction_md,prediction_ma))
 
 
-     # Entrena y evalúa el clasificador final a partir de la representación late fusion
-     stdSlr = StandardScaler().fit(late_test_dam)
-     late_test =  stdSlr.transform(late_test_dam)
+    # Entrena y evalúa el clasificador final a partir de la representación late fusion
+    stdSlr = StandardScaler().fit(late_test_dam)
+    late_test =  stdSlr.transform(late_test_dam)
     
-     prediction_lf = model_lf.predict_proba(late_test)[0]
+    prediction_lf = model_lf.predict_proba(late_test)[0]
     
-     return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
+    return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
 
-        
 if __name__ == "__main__":
-    flask_app.run(debug=True,use_reloader=False)
+    flask_app.run(debug=True, use_reloader=False)
