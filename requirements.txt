@@ -2,14 +2,11 @@ click==7.1.2
 cloudpickle
 Flask==1.1.2
 Flask-RESTful==0.3.7
-imbalanced-learn
 joblib
 json5==0.9.5
 numpy==1.20.2
 pandas
 pandas-flavor==0.2.0
-python-dateutil==2.8.1
 scikit-learn
 scipy
-statsmodels==0.11.1
 Werkzeug==1.0.1
