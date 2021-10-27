@@ -15,7 +15,7 @@ import math
 import datetime as dt 
 from datetime import datetime, date, time, timedelta
 from flask import Flask, request, jsonify, render_template
-from flask_restful import Resource, Api
+#from flask_restful import Resource, Api
 from sklearn.preprocessing import StandardScaler
 
 # Create flask app
