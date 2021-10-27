@@ -22,17 +22,20 @@ from sklearn.preprocessing import StandardScaler
 flask_app = Flask(__name__)
 #model = pickle.load(open("model_api_prueba.pkl", "rb"))
 
-filename_model_d = 'model_api_demog.pkl'
-filename_model_md = 'model_api_md.pkl'
-filename_model_a = 'model_api_a.pkl'
-filename_model_ma = 'model_api_ma.pkl'
-filename_latefusion = 'model_latefusion.pkl'
+#filename_model_d = 'model_api_demog.pkl'
+#filename_model_md = 'model_api_md.pkl'
+#filename_model_a = 'model_api_a.pkl'
+#filename_model_ma = 'model_api_ma.pkl'
+#filename_latefusion = 'model_latefusion.pkl'
+filename_MLP = 'model_MLP.pkl'
 
-model_d = joblib.load(filename_model_d)
-model_md = joblib.load(filename_model_md)
-model_a = joblib.load(filename_model_a)
-model_ma = joblib.load(filename_model_ma)
-model_lf = joblib.load(filename_latefusion)
+#model_d = joblib.load(filename_model_d)
+#model_md = joblib.load(filename_model_md)
+#model_a = joblib.load(filename_model_a)
+#model_ma = joblib.load(filename_model_ma)
+#model_lf = joblib.load(filename_latefusion)
+
+model_d = joblib.load(ilename_MLP)
 
 @flask_app.route("/")
 def Home():
@@ -95,32 +98,17 @@ def predict():
     m3_a = (feature_math/5)*((mah+mbh)/2)
     m4_a = (feature_edf/5)*((mah+mbh)/2)
     
-    list_fmd = [hc_,m1_d,m2_d]
-    list_fma = [mCM,mSC,mCh,mEr,mAt,mah,mbh,m1_a,m2_a,m3_a,m4_a]
+    list_fmd = [hc_,m1_d,m2_d,mCM,mSC,mCh,mEr,mAt,mah,mbh,m1_a,m2_a,m3_a,m4_a]
     
-    features_d = [np.array(features_ini[1:8])]
-    features_d_ = [np.append(features_d, edad_)]
+    features_d = [np.array(features_ini[1:])]
     features_md = [np.array(list_fmd)]
-    features_a = [np.array(features_ini[8:20])]
-    features_ma = [np.array(list_fma)]
+    features_d_ = [np.append(features_d, edad_,features_md)]
     
-    
-    prediction_d = model_d.predict_proba(features_d_)
-    
-    prediction_md = model_md.predict_proba(features_md)
-    
-    prediction_a = model_a.predict_proba(features_a)
-    
-    prediction_ma = model_ma.predict_proba(features_ma)
-    
-    late_test_dam =  np.hstack((prediction_d,prediction_a,prediction_md,prediction_ma))
-
-
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
-    stdSlr = StandardScaler().fit(late_test_dam)
-    late_test =  stdSlr.transform(late_test_dam)
+    stdSlr = StandardScaler().fit(features_d_)
+    late_test =  stdSlr.transform(features_d_)
     
-    prediction_lf = model_lf.predict_proba(late_test)[0]
+    prediction_lf = model_MLP.predict_proba(late_test)[0]
     
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
 
