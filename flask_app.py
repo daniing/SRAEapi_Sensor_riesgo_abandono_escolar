@@ -9,7 +9,7 @@ Created on Tue Oct 26 22:22:33 2021
 import csv
 import numpy as np
 import pandas as pd
-#import pickle
+import pickle
 import joblib
 import math
 import datetime as dt 
@@ -22,17 +22,22 @@ from sklearn.preprocessing import StandardScaler
 flask_app = Flask(__name__)
 #model = pickle.load(open("model_api_prueba.pkl", "rb"))
 
-filename_model_d = 'model_api_demog.pkl'
-filename_model_md = 'model_api_md.pkl'
-filename_model_a = 'model_api_a.pkl'
-filename_model_ma = 'model_api_ma.pkl'
-filename_latefusion = 'model_latefusion.pkl'
+#filename_model_d = 'model_api_demog.pkl'
+#filename_model_md = 'model_api_md.pkl'
+#filename_model_a = 'model_api_a.pkl'
+#filename_model_ma = 'model_api_ma.pkl'
+#filename_latefusion = 'model_latefusion.pkl'
 
-model_d = joblib.load(filename_model_d)
-model_md = joblib.load(filename_model_md)
-model_a = joblib.load(filename_model_a)
-model_ma = joblib.load(filename_model_ma)
-model_lf = joblib.load(filename_latefusion)
+#model_d = joblib.load(filename_model_d)
+#model_md = joblib.load(filename_model_md)
+#model_a = joblib.load(filename_model_a)
+#model_ma = joblib.load(filename_model_ma)
+#model_lf = joblib.load(filename_latefusion)
+model_d = pickle.load(open("model_api_demog.pkl", "rb"))
+model_md = pickle.load(open("model_api_md.pkl", "rb"))
+model_a = pickle.load(open("model_api_a.pkl", "rb"))
+model_ma = pickle.load(open("model_api_ma.pkl", "rb"))
+model_lf = pickle.load(open("model_api_latefusion.pkl", "rb"))
 
 @flask_app.route("/")
 def Home():
