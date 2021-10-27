@@ -41,7 +41,7 @@ def Home():
 
 @flask_app.route("/predict", methods = ["POST"])
 def predict():
-    if request.method == "POST"
+    if request.method == "POST":
         features_ini = [str(x) for x in request.form.values()]
         features_ini_ = np.array(features_ini)
         features = np.array(features_ini_)
