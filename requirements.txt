@@ -6,6 +6,10 @@ json5==0.9.5
 numpy==1.20.2
 pandas
 pandas-flavor==0.2.0
-scikit-learn
-scipy
+scikit-learn>=0.18
+scipy>=0.15.1
 Werkzeug==1.0.1
+itsdangerous==1.1.0
+Jinja2==2.10.1
+MarkupSafe==1.1.1
+
