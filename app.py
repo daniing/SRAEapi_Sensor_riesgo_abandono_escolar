@@ -12,15 +12,13 @@ from sklearn.preprocessing import StandardScaler
 
 # Create flask app
 app = Flask(__name__)
-#model = pickle.load(open("model_api_prueba.pkl", "rb"))
 
 #filename_model_d = 'model_api_demog.pkl'
 #filename_model_md = 'model_api_md.pkl'
 #filename_model_a = 'model_api_a.pkl'
 #filename_model_ma = 'model_api_ma.pkl'
 #filename_latefusion = 'model_latefusion.pkl'
-filename_MLP = 'model_MLP.pkl'
-
+#filename_MLP = 'model_MLP.pkl'
 #model_d = joblib.load(filename_model_d)
 #model_md = joblib.load(filename_model_md)
 #model_a = joblib.load(filename_model_a)
@@ -28,10 +26,10 @@ filename_MLP = 'model_MLP.pkl'
 #model_lf = joblib.load(filename_latefusion)
 #model_MLP = joblib.load(filename_MLP)
 
-#model_MLP = pickle.load(open('model_MLP.pkl','rb'))
+model_MLP = pickle.load(open('model_MLP.pkl','rb'))
 
-with open(filename_MLP, 'rb') as f: 
-    model_MLP = pickle.loads(f.read())
+#with open(filename_MLP, 'rb') as f: 
+#    model_MLP = pickle.loads(f.read())
     
 @app.route("/")
 def Home():
