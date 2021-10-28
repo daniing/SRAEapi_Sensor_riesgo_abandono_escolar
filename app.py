@@ -11,7 +11,7 @@ from flask import Flask, request, jsonify, render_template
 from sklearn.preprocessing import StandardScaler
 
 # Create flask app
-flask_app = Flask(__name__)
+app = Flask(__name__)
 #model = pickle.load(open("model_api_prueba.pkl", "rb"))
 
 #filename_model_d = 'model_api_demog.pkl'
@@ -33,11 +33,11 @@ filename_MLP = 'model_MLP.pkl'
 with open(filename_MLP, 'rb') as f: 
     model_MLP = pickle.loads(f.read())
     
-@flask_app.route("/")
+@app.route("/")
 def Home():
     return render_template("index.html")
 
-@flask_app.route("/predict", methods = ["GET","POST"])
+@app.route("/predict", methods = ["GET","POST"])
 def predict():
     
     #features_ini = [str(x) for x in request.form.values()]
@@ -121,4 +121,4 @@ def predict():
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
 
 if __name__ == "__main__":
-    flask_app.run(debug=True, use_reloader=False)
+    app.run(debug=True, use_reloader=False)
