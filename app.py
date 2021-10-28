@@ -109,7 +109,7 @@ def predict():
     features_d = [edad_]+features_float_+list_fmd
     
     #features_d_ = [np.append(features_d, edad_)]
-    features_d_ = np.array([features_d])
+    features_d_ = [np.array(features_d)]
     
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
     stdSlr = StandardScaler().fit(features_d_)
