@@ -119,4 +119,4 @@ def predict():
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
 
 if __name__ == "__main__":
-    app.run(debug=True, use_reloader=False)
+    app.run(debug=True)
