@@ -54,7 +54,6 @@ def predict():
                  feature_catp,feature_soc,feature_rel,feature_art,
                  feature_edf,feature_tec,feature_emp,feature_etv]
     
-    prediction_lf = model_MLP.predict_proba(late_test)[:,1]
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(list_fini))
 
 if __name__ == "__main__":
