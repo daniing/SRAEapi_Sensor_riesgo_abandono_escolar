@@ -87,10 +87,10 @@ def predict():
     features_d_ = [np.array(features_d)]
     
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
-    stdSlr = StandardScaler().fit(features_d_)
-    late_test =  stdSlr.transform(features_d_)
+    #stdSlr = StandardScaler().fit(features_d_)
+    #late_test =  stdSlr.transform(features_d_)
     
-    prediction_lf = model_MLP.predict_proba(late_test)[:,1]
+    prediction_lf = model_MLP.predict_proba(features_d_)[:,1]
     
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
 
