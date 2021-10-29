@@ -24,9 +24,9 @@
                                 <label for="size_3">Grado actual</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" placeholder="70.2" min="0" max="100" step="any" name="puntaje_sisben"required>
+                                <input class="form control" type="number" placeholder="70.2" min="0" max="100" step="any" name="puntaje_sisben" required>
                                 <label for="size_2">Puntaje Sisb&eacute;n</label>
-                                <input class="form control" type="number" placeholder="0.645" min="0" max="10" step="any" name="distancia"required>
+                                <input class="form control" type="number" placeholder="0.645" min="0" max="10" step="any" name="distancia" required>
                                 <label for="size_3">Distancia (kil&oacute;metros)</label>
                                 <input class="form control" type="number" placeholder="2018" pattern="^[2016-2020]([,][2016-2020])?$" min="2016" max="2020" name="year_in" required>
                                 <label for="size_2">A&ntilde;o de ingreso</label>
@@ -34,49 +34,46 @@
                                 <label for="size_3">Grado de ingreso</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" placeholder="5.0" min="1" max="5" step="0.01" name="math"required>
+                                <input class="form control" type="number" placeholder="5.0" min="1" max="5" step="0.01" name="math" required>
                                 <label for="size_3">Matem&aacute;ticas</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="cn"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="cn" required>
                                 <label for="size_3">Ciencias Naturales</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="ing"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="ing" required>
                                 <label for="size_3">Ingl&eacute;s</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="esp"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="esp" required>
                                 <label for="size_3">Espa&ntilde;ol</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="cp"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="cp" required>
                                 <label for="size_3">C&aacute;tedra de Paz</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="soc"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="soc" required>
                                 <label for="size_3">Sociales</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="rel"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="rel" required>
                                 <label for="size_3">Religi&oacute;n</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="art"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="art" required>
                                 <label for="size_3">Artes</label>
                             </p>
                             <p>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="edf"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="edf" required>
                                 <label for="size_3">Educaci&oacute;n F&iacute;sica</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="tech"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="tech" required>
                                 <label for="size_3">Tecnolog&iacute;a</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="emp"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="emp" required>
                                 <label for="size_3">Emprendimiento</label>
-                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="etv"required>
+                                <input class="form control" type="number" placeholder="1.0" min="1" max="5" step="0.01" name="etv" required>
                                 <label for="size_3">&Eacute;tica y Valores</label>
                             </p>
                             <p>
                                 <button type="submit" class="btn btn-primary btn-block btn-large">Predecir Riesgo de Abandono</button>
                             </p>
                         </fieldset>
-                </form>
-
-                <br>
-                <br>
-                {{ prediction_text }}
+                </div>
+            </form>
+            <br>
+            <br>
+            {{ prediction_text }}
             <!--<input class="btn btn-primary mt-3" type="submit" value="Predecir Riesgo de Abandono">-->
             <!--<p class="text-center">El riesgo de abandono es de {{ prediction }}</p>-->
         </div>
     </body>
 </html>
-
-
-
