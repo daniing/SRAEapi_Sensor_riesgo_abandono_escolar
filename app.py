@@ -54,7 +54,45 @@ def predict():
                  feature_catp,feature_soc,feature_rel,feature_art,
                  feature_edf,feature_tec,feature_emp,feature_etv]
     
-    return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(list_fini))
+    #hc_ = feature_hc
+    features_float_ = [float(x) for x in list_fini]
+    
+    features_array = np.array(features_float_)
+    
+    m1_d = edad_ - features_array[2] + 5
+    
+    m2_d = np.where((features_array[2]==features_array[6]),0,
+                     np.where((((2019-features_array[5])+features_array[5])-features_array[6])<0,
+                     0,((2019-features_array[5])+features_array[5])-features_array[6]))
+    
+    mCM = (features_array[8]+features_array[7])/2
+    mSC = (features_array[12]+features_array[11])/2
+    mCh = (features_array[10]+features_array[9])/2
+    mEr = (features_array[18]+features_array[13])/2
+    mAt = (features_array[14]+features_array[16])/2
+    
+    mah=(features_array[8]+features_array[7]+features_array[12]+features_array[10]+features_array[9])/5
+    mbh=(features_array[11]+features_array[13]+features_array[14]+features_array[15]+features_array[16]+features_array[17]+features_array[18])/7
+    
+    m1_a = (features_array[8]/5)*((mah+mbh)/2)
+    m2_a = (features_array[17]/5)*((mah+mbh)/2)
+    m3_a = (features_array[7]/5)*((mah+mbh)/2)
+    m4_a = (features_array[15]/5)*((mah+mbh)/2)
+    
+    list_fmd = [m1_d,m2_d,mCM,mSC,mCh,mEr,mAt,mah,mbh,m1_a,m2_a,m3_a,m4_a]
+    
+    features_d = [edad_]+features_float_+list_fmd
+    
+    #features_d_ = [np.append(features_d, edad_)]
+    features_d_ = [np.array(features_d)]
+    
+    # Entrena y evalúa el clasificador final a partir de la representación late fusion
+    stdSlr = StandardScaler().fit(features_d_)
+    late_test =  stdSlr.transform(features_d_)
+    
+    prediction_lf = model_MLP.predict_proba(late_test)[:,1]
+    
+    return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
 
 if __name__ == "__main__":
     app.run(debug=True)
