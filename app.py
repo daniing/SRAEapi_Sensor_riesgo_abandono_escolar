@@ -10,89 +10,143 @@ from flask import Flask, request, jsonify, render_template
 #from flask_restful import Resource, Api
 from sklearn.preprocessing import StandardScaler
 
+
 # Create flask app
 app = Flask(__name__)
 
-model_MLP = pickle.load(open('model_MLP.pkl','rb'))
-scaler_ = pickle.load(open('scaler.pkl','rb'))
-    
+#Call model
+model_api_demog = pickle.load(open('model_api_demog.pkl','rb'))
+model_api_md = pickle.load(open('model_api_md.pkl','rb'))
+model_api_a = pickle.load(open('model_api_a.pkl','rb'))
+model_api_ma = pickle.load(open('model_api_ma.pkl','rb'))
+model_latefusion = pickle.load(open('model_latefusion.pkl','rb'))
+
+#Call scaler
+scaler_d = pickle.load(open('scaler_d.pkl','rb'))
+scaler_md = pickle.load(open('scaler_md.pkl','rb'))
+scaler_a = pickle.load(open('scaler_a.pkl','rb'))
+scaler_ma = pickle.load(open('scaler_ma.pkl','rb'))
+scaler_latefusion = pickle.load(open('scaler_latefusion.pkl','rb'))
+
 @app.route("/")
 def Home():
     return render_template("index.html")
 
 @app.route("/predict", methods = ["GET","POST"])
 def predict():
-    
     fech_n_ = request.form.get('edad')
-    
     fech1 = datetime.strptime(fech_n_, '%Y-%m-%d').date()
     fech2 = date.today()# criterio de medición (año) 
     edad_ = round((fech2-fech1)/dt.timedelta(365,5,49,12),3) #promedio de años comunes y bisiestos 
     
-    feature_hc = request.form.get('hermanos_Colegio')
-    feature_g = request.form.get('gender')
-    feature_grado_a = request.form.get('curso')
-    feature_score_sisben = request.form.get('puntaje_sisben')
-    feature_distance = request.form.get('distancia')
-    feature_year_in = request.form.get('year_in')
-    feature_grado_in = request.form.get('grado_in')
-    feature_math = request.form.get('math')
-    feature_cn = request.form.get('cn')
-    feature_ing = request.form.get('ing')
-    feature_esp = request.form.get('esp')
-    feature_catp = request.form.get('cp')
-    feature_soc = request.form.get('soc')
-    feature_rel = request.form.get('rel')
-    feature_art = request.form.get('art')
-    feature_edf = request.form.get('edf')
-    feature_tec = request.form.get('tech')
-    feature_emp = request.form.get('emp')
-    feature_etv = request.form.get('etv')
+    feature_hc = float(request.form.get('hermanos_Colegio'))
+    feature_g = float(request.form.get('gender'))
+    feature_grado_a = float(request.form.get('curso'))
+    feature_score_sisben = float(request.form.get('puntaje_sisben'))
+    feature_distance = float(request.form.get('distancia'))
+    feature_year_in = float(request.form.get('year_in'))
+    feature_grado_in = float(request.form.get('grado_in'))
+    feature_math = float(request.form.get('math'))
+    feature_cn = float(request.form.get('cn'))
+    feature_ing = float(request.form.get('ing'))
+    feature_esp = float(request.form.get('esp'))
+    feature_catp = float(request.form.get('cp'))
+    feature_soc = float(request.form.get('soc'))
+    feature_rel = float(request.form.get('rel'))
+    feature_art = float(request.form.get('art'))
+    feature_edf = float(request.form.get('edf'))
+    feature_tec = float(request.form.get('tech'))
+    feature_emp = float(request.form.get('emp'))
+    feature_etv = float(request.form.get('etv'))
     
-    list_fini = [feature_hc,feature_g,feature_grado_a,feature_score_sisben,
-                 feature_distance,feature_year_in,feature_grado_in,
-                 feature_math,feature_cn,feature_ing,feature_esp,
+
+    list_demog = [edad_,feature_hc,feature_g,feature_grado_a,feature_score_sisben,
+                 feature_distance,feature_year_in,feature_grado_in]
+    
+    list_acad= [feature_math,feature_cn,feature_ing,feature_esp,
                  feature_catp,feature_soc,feature_rel,feature_art,
                  feature_edf,feature_tec,feature_emp,feature_etv]
     
-    #hc_ = feature_hc
-    features_float_ = [float(x) for x in list_fini]
+    #features_array = np.array(features_float_)
     
-    features_array = np.array(features_float_)
+    m1_d = edad_ - feature_grado_a + 5
     
-    m1_d = edad_ - features_array[2] + 5
+    #m2_d = np.where((feature_grado_a==feature_grado_in),0,
+    #                 np.where((2019-feature_year_in+feature_grado_in)-feature_grado_a)<0,
+    #                 0,((2019-feature_year_in+feature_grado_in)-feature_grado_a))
     
-    m2_d = np.where((features_array[2]==features_array[6]),0,
-                     np.where((((2019-features_array[5])+features_array[5])-features_array[6])<0,
-                     0,((2019-features_array[5])+features_array[5])-features_array[6]))
+    m2_d = abs((2019-feature_year_in+feature_grado_in)-feature_grado_a)
     
-    mCM = (features_array[8]+features_array[7])/2
-    mSC = (features_array[12]+features_array[11])/2
-    mCh = (features_array[10]+features_array[9])/2
-    mEr = (features_array[18]+features_array[13])/2
-    mAt = (features_array[14]+features_array[16])/2
+    m3_d = 0.415*feature_g+ 0.089*edad_ - 0.009*feature_score_sisben-3.10
     
-    mah=(features_array[8]+features_array[7]+features_array[12]+features_array[10]+features_array[9])/5
-    mbh=(features_array[11]+features_array[13]+features_array[14]+features_array[15]+features_array[16]+features_array[17]+features_array[18])/7
+    m4_d = 0.412*feature_g+ 0.085*feature_hc- 0.009*feature_score_sisben-1.77
     
-    m1_a = (features_array[8]/5)*((mah+mbh)/2)
-    m2_a = (features_array[17]/5)*((mah+mbh)/2)
-    m3_a = (features_array[7]/5)*((mah+mbh)/2)
-    m4_a = (features_array[15]/5)*((mah+mbh)/2)
+    m5_d = 0.399*feature_g+ 0.084*edad_+ 0.161*feature_distance-3.25
+                                         
+    m6_d = 0.397*feature_g+ 0.065*feature_hc+ 0.168*feature_distance-1.99
+
+
+    list_md = [m1_d,m2_d,m3_d,m4_d,m5_d,m6_d]
     
-    list_fmd = [m1_d,m2_d,mCM,mSC,mCh,mEr,mAt,mah,mbh,m1_a,m2_a,m3_a,m4_a]
+    mCM = (feature_cn+feature_math)/2
+    mSC = (feature_soc+feature_catp)/2
+    mCh = (feature_esp+feature_ing)/2
+    mEr = (feature_etv+feature_rel)/2
+    mAt = (feature_art+feature_tec)/2
     
-    features_d = [edad_]+features_float_+list_fmd
+    mah=(feature_cn+feature_math+feature_soc+feature_esp+feature_ing)/5
+    mbh=(feature_tec+feature_rel+feature_catp+feature_art+feature_etv+feature_emp+feature_edf)/7
     
-    #features_d_ = [np.append(features_d, edad_)]
-    features_d_ = [np.array(features_d)]
+    m1_a = (feature_cn/5)*((mah+mbh)/2)
+    m2_a = (feature_emp/5)*((mah+mbh)/2)
+    m3_a = (feature_math/5)*((mah+mbh)/2)
+    m4_a = (feature_edf/5)*((mah+mbh)/2)
     
+    
+    list_ma = [mCM,mSC,mCh,mEr,mAt,mah,mbh,m1_a,m2_a,m3_a,m4_a]
+    
+    
+    features_d = [np.array(list_demog)]
+    features_md = [np.array(list_md)]
+    features_a = [np.array(list_acad)]
+    features_ma = [np.array(list_ma)]
+    
+    # Entrena y evalúa el clasificador para características demográficas
+    stdSlr_d = scaler_d
+    features_scaler_d =  stdSlr_d.fit_transform(features_d)
+    
+    prediction_d = model_api_demog.predict_proba(features_scaler_d)
+
+    # Entrena y evalúa el clasificador para características demográficas
+    stdSlr_md = scaler_md
+    features_scaler_md =  stdSlr_md.fit_transform(features_md)
+    
+    prediction_md = model_api_md.predict_proba(features_scaler_md)
+    
+    
+    # Entrena y evalúa el clasificador para características demográficas
+    stdSlr_a = scaler_a
+    features_scaler_a =  stdSlr_a.fit_transform(features_a)
+    
+    prediction_a = model_api_a.predict_proba(features_scaler_a)
+    
+    # Entrena y evalúa el clasificador para características demográficas
+    stdSlr_ma = scaler_ma
+    features_scaler_ma =  stdSlr_ma.fit_transform(features_ma)
+    
+    prediction_ma = model_api_ma.predict_proba(features_scaler_ma)
+    
+    features_latefusion =  np.hstack((prediction_d,prediction_a,prediction_md,prediction_ma))
+
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
-    features_scaler = scaler_.transform(features_d_)
+    stdSlr_l = scaler_latefusion
+    features_f =  stdSlr_l.fit_transform(features_latefusion)
     
-    prediction_lf = model_MLP.predict_proba(features_scaler)[:,1]
+    prediction_lf = model_latefusion.predict_proba(features_f)[:,1]
     
-    return render_template("index.html", prediction_text = "El riesgo de abandono es de {}".format(prediction_lf))
+
+    return render_template("index.html", prediction_text = "El riesgo de abandono es de {} %".format(mCM))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=True, use_reloader=False)
+    #flask_app.config['TEMPLATES_AUTO_RELOAD'] = True
