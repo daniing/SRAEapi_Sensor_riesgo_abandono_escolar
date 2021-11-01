@@ -21,12 +21,6 @@ model_api_a = pickle.load(open('model_api_a.pkl','rb'))
 model_api_ma = pickle.load(open('model_api_ma.pkl','rb'))
 model_latefusion = pickle.load(open('model_latefusion.pkl','rb'))
 
-#Call scaler
-scaler_d = pickle.load(open('scaler_d.pkl','rb'))
-scaler_md = pickle.load(open('scaler_md.pkl','rb'))
-scaler_a = pickle.load(open('scaler_a.pkl','rb'))
-scaler_ma = pickle.load(open('scaler_ma.pkl','rb'))
-scaler_latefusion = pickle.load(open('scaler_latefusion.pkl','rb'))
 
 @app.route("/")
 def Home():
@@ -59,9 +53,9 @@ def predict():
     feature_emp = float(request.form.get('emp'))
     feature_etv = float(request.form.get('etv'))
     
-
-    list_demog = [edad_,feature_hc,feature_g,feature_grado_a,feature_score_sisben,
-                 feature_distance,feature_year_in,feature_grado_in]
+    
+    list_demog = [edad_,feature_hc,feature_g,feature_score_sisben,feature_distance,feature_grado_in,
+                 feature_year_in,feature_grado_a]
     
     list_acad= [feature_math,feature_cn,feature_ing,feature_esp,
                  feature_catp,feature_soc,feature_rel,feature_art,
@@ -112,40 +106,25 @@ def predict():
     features_ma = [np.array(list_ma)]
     
     # Entrena y evalúa el clasificador para características demográficas
-    stdSlr_d = scaler_d
-    features_scaler_d =  stdSlr_d.fit_transform(features_d)
-    
-    prediction_d = model_api_demog.predict_proba(features_scaler_d)
+    prediction_d = model_api_demog.predict_proba(features_d)
 
-    # Entrena y evalúa el clasificador para características demográficas
-    stdSlr_md = scaler_md
-    features_scaler_md =  stdSlr_md.fit_transform(features_md)
-    
-    prediction_md = model_api_md.predict_proba(features_scaler_md)
+    # Entrena y evalúa el clasificador para métricas de características demográficas
+    prediction_md = model_api_md.predict_proba(features_md)
     
     
-    # Entrena y evalúa el clasificador para características demográficas
-    stdSlr_a = scaler_a
-    features_scaler_a =  stdSlr_a.fit_transform(features_a)
+    # Entrena y evalúa el clasificador para características académicas
+    prediction_a = model_api_a.predict_proba(features_a)
     
-    prediction_a = model_api_a.predict_proba(features_scaler_a)
-    
-    # Entrena y evalúa el clasificador para características demográficas
-    stdSlr_ma = scaler_ma
-    features_scaler_ma =  stdSlr_ma.fit_transform(features_ma)
-    
-    prediction_ma = model_api_ma.predict_proba(features_scaler_ma)
+    # Entrena y evalúa el clasificador para métricas de características académicas
+    prediction_ma = model_api_ma.predict_proba(features_ma)
     
     features_latefusion =  np.hstack((prediction_d,prediction_a,prediction_md,prediction_ma))
 
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
-    stdSlr_l = scaler_latefusion
-    features_f =  stdSlr_l.fit_transform(features_latefusion)
+    prediction_lf = model_latefusion.predict_proba(features_latefusion)[:,1][0]
     
-    prediction_lf = model_latefusion.predict_proba(features_f)[:,1]
-    
-
-    return render_template("index.html", prediction_text = "El riesgo de abandono es de {} %".format(mCM))
+    result = round(prediction_lf)
+    return render_template("index.html", prediction_text = "El riesgo de abandono es de {} %".format(result))
 
 if __name__ == "__main__":
     app.run(debug=True, use_reloader=False)
