@@ -70,7 +70,7 @@ def predict():
     #                 np.where((year_a-feature_year_in+feature_grado_in)-feature_grado_a)<0,
     #                 0,((year_a-feature_year_in+feature_grado_in)-feature_grado_a))
     
-    m2_d = abs((year_a-feature_year_in+feature_grado_in)-feature_grado_a)
+    m2_d = (year_a-feature_year_in+feature_grado_in)-feature_grado_a
     
     m3_d = 0.415*feature_g+ 0.089*edad_ - 0.009*feature_score_sisben-3.10
     
