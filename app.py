@@ -123,7 +123,7 @@ def predict():
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
     prediction_lf = model_latefusion.predict_proba(features_latefusion)[:,1][0]
     
-    result = round(prediction_lf)
+    result = (round (prediction_lf,4) )* 100
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {} %".format(result))
 
 if __name__ == "__main__":
