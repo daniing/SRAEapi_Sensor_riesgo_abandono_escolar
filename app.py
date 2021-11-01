@@ -32,6 +32,7 @@ def predict():
     fech1 = datetime.strptime(fech_n_, '%Y-%m-%d').date()
     fech2 = date.today()# criterio de medición (año) 
     edad_ = round((fech2-fech1)/dt.timedelta(365,5,49,12),3) #promedio de años comunes y bisiestos 
+    year_a = float(date.today().year) #año actual
     
     feature_hc = float(request.form.get('hermanos_Colegio'))
     feature_g = float(request.form.get('gender'))
@@ -66,10 +67,10 @@ def predict():
     m1_d = edad_ - feature_grado_a + 5
     
     #m2_d = np.where((feature_grado_a==feature_grado_in),0,
-    #                 np.where((2019-feature_year_in+feature_grado_in)-feature_grado_a)<0,
-    #                 0,((2019-feature_year_in+feature_grado_in)-feature_grado_a))
+    #                 np.where((year_a-feature_year_in+feature_grado_in)-feature_grado_a)<0,
+    #                 0,((year_a-feature_year_in+feature_grado_in)-feature_grado_a))
     
-    m2_d = abs((2019-feature_year_in+feature_grado_in)-feature_grado_a)
+    m2_d = abs((year_a-feature_year_in+feature_grado_in)-feature_grado_a)
     
     m3_d = 0.415*feature_g+ 0.089*edad_ - 0.009*feature_score_sisben-3.10
     
