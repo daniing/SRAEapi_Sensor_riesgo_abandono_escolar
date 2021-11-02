@@ -1,15 +1,15 @@
 # SRAEapi_risk_school_dropout
 Aquí se encuentra la información de una aplicación para apoyar la detección del riesgo de deserción escolar.
 
-Esta aplicación fue el resultado de una investigación desarrollada en la línea de inteligencia artificial, de acuerdo al despliegue del proyecto de minería de datos implementado en la IEBS (Institucion Educativa Barrio Santander).
+Esta aplicación fue el resultado de una investigación desarrollada en la línea de inteligencia artificial, de acuerdo al despliegue del proyecto de minería de datos implementado en la IEBS (Institución Educativa Barrio Santander).
 
 Los modelos fueron entrenados con cuatro tipos de características:
       - Características demográficas
-      - Transformación de características demográficas: Métricas de caratcerísticas demográficas
+      - Transformación de características demográficas: Métricas de características demográficas
       - Características académicas
-      - Transformación de características académicas: Métricas de caratcerísticas académicas
+      - Transformación de características académicas: Métricas de características académicas
       
-El esquema de detección se planteo utilizando un modelo de "latefusion". Inicialmente cuatro clasificadores expertos en cada tipo de características y luego se obtenia la probabilidad de cada uno de los clasificadores a la entrada de un clasificador final.
+El esquema de detección se planteo utilizando un modelo de "latefusion". Inicialmente cuatro clasificadores expertos en cada tipo de características y luego se obtenía la probabilidad de cada uno de los clasificadores a la entrada de un clasificador final.
 
 Características estudiantiles:
 Demográficas
