@@ -72,16 +72,7 @@ def predict():
     
     m2_d = (year_a-feature_year_in+feature_grado_in)-feature_grado_a
     
-    m3_d = 0.415*feature_g+ 0.089*edad_ - 0.009*feature_score_sisben-3.10
-    
-    m4_d = 0.412*feature_g+ 0.085*feature_hc- 0.009*feature_score_sisben-1.77
-    
-    m5_d = 0.399*feature_g+ 0.084*edad_+ 0.161*feature_distance-3.25
-                                         
-    m6_d = 0.397*feature_g+ 0.065*feature_hc+ 0.168*feature_distance-1.99
-
-
-    list_md = [m1_d,m2_d,m3_d,m4_d,m5_d,m6_d]
+    list_md = [m1_d,m2_d]
     
     mCM = (feature_cn+feature_math)/2
     mSC = (feature_soc+feature_catp)/2
@@ -112,7 +103,6 @@ def predict():
     # Entrena y evalúa el clasificador para métricas de características demográficas
     prediction_md = model_api_md.predict_proba(features_md)
     
-    
     # Entrena y evalúa el clasificador para características académicas
     prediction_a = model_api_a.predict_proba(features_a)
     
@@ -124,7 +114,7 @@ def predict():
     # Entrena y evalúa el clasificador final a partir de la representación late fusion
     prediction_lf = model_latefusion.predict_proba(features_latefusion)[:,1][0]
     
-    result = (round (prediction_lf,4) )* 100
+    result = (round (prediction_lf,2))* 100
     return render_template("index.html", prediction_text = "El riesgo de abandono es de {} %".format(result))
 
 if __name__ == "__main__":
